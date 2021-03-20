@@ -3,7 +3,31 @@ import spotipy.oauth2 as oauth2
 import configparser
 
 
-def get_playlist_tracks(playlist_id):
+class SpotifyHandler:
+
+    def __init__(self):
+        self.read_config()
+        self.get_client_data()
+        self.auth = oauth2.SpotifyClientCredentials(
+            client_id=self.client_id,
+            client_secret=self.client_secret
+        )
+        self.set_connection()
+
+    def read_config(self):
+        self.config = configparser.ConfigParser()
+        self.config.read('config.cfg')
+
+    def get_client_data(self):
+        self.client_id = self.config.get('SPOTIFY', 'CLIENT_ID')
+        self.client_secret = self.config.get('SPOTIFY', 'CLIENT_SECRET')
+
+    def set_connection(self):
+        token = self.auth.get_access_token()
+        self.spotify = spotipy.Spotify(auth=token)
+
+
+def get_playlist_tracks(playlist_id, spotify):
     results = spotify.playlist_items(playlist_id)
     tracks = results['items']
     while results['next']:
@@ -12,19 +36,9 @@ def get_playlist_tracks(playlist_id):
     return tracks
 
 
-config = configparser.ConfigParser()
-config.read('config.cfg')
-client_id = config.get('SPOTIFY', 'CLIENT_ID')
-client_secret = config.get('SPOTIFY', 'CLIENT_SECRET')
-auth = oauth2.SpotifyClientCredentials(
-    client_id=client_id,
-    client_secret=client_secret
-)
-
-token = auth.get_access_token()
-spotify = spotipy.Spotify(auth=token)
 # example playlist
-tracks = get_playlist_tracks('0B4jhlB6QUGHzY8i3rEwTt')
+handler = SpotifyHandler()
+tracks = get_playlist_tracks('0B4jhlB6QUGHzY8i3rEwTt', handler.spotify )
 for track in tracks:
     track_contents = track['track']
     track_name = track_contents['name']
