@@ -36,9 +36,18 @@ def get_playlist_tracks(playlist_id, spotify):
     return tracks
 
 
+class Song:
+    def __init__(self, name, artists):
+        self.name = name
+        self.artists = artists
+
+    def display(self):
+        print(self.name,self.artists)
+
 # example playlist
 handler = SpotifyHandler()
-tracks = get_playlist_tracks('0B4jhlB6QUGHzY8i3rEwTt', handler.spotify )
+tracks = get_playlist_tracks('0B4jhlB6QUGHzY8i3rEwTt', handler.spotify)
+songs = list()
 for track in tracks:
     track_contents = track['track']
     track_name = track_contents['name']
@@ -46,4 +55,7 @@ for track in tracks:
     artists_name_list = list()
     for artist in artist_contents:
         artists_name_list.append(artist['name'])
-    print(track_name, artists_name_list)
+    songs.append(Song(track_name, artists_name_list))
+
+for song in songs:
+    song.display()
