@@ -1,6 +1,7 @@
 import spotipy
 import spotipy.oauth2 as oauth2
 import configparser
+import random
 
 
 class SpotifyHandler:
@@ -41,21 +42,52 @@ class Song:
         self.name = name
         self.artists = artists
 
+    def __eq__(self, other):
+        return self.name == other.name and self.artists == other.artists
+
+    def __hash__(self):
+        return hash(('title', self.name,
+                     'author_name', tuple(self.artists)))
+
     def display(self):
-        print(self.name,self.artists)
+        print(self.name, self.artists)
 
-# example playlist
-handler = SpotifyHandler()
-tracks = get_playlist_tracks('0B4jhlB6QUGHzY8i3rEwTt', handler.spotify)
-songs = list()
-for track in tracks:
-    track_contents = track['track']
-    track_name = track_contents['name']
-    artist_contents = track_contents['artists']
-    artists_name_list = list()
-    for artist in artist_contents:
-        artists_name_list.append(artist['name'])
-    songs.append(Song(track_name, artists_name_list))
 
-for song in songs:
-    song.display()
+def remove_duplicated_songs(songs):
+    print('hehe', len(set(songs)))
+    return list(set(songs))
+
+
+def extract_songs(tracks):
+    songs = list()
+    for track in tracks:
+        track_contents = track['track']
+        track_name = track_contents['name']
+        artist_contents = track_contents['artists']
+        artists_name_list = list()
+        for artist in artist_contents:
+            artists_name_list.append(artist['name'])
+        songs.append(Song(track_name, artists_name_list))
+    return songs
+
+
+def main():
+    # example playlist
+    handler = SpotifyHandler()
+    songs = list()
+    while True:
+        prompt_message = '\n**** \nInput link to a Spotify playlist or input q if you want to quit \n'
+        playlist_link = input(prompt_message)
+        if playlist_link == 'q':
+            break
+        tracks = get_playlist_tracks(playlist_link, handler.spotify)
+        songs.extend(extract_songs(tracks))
+        random.shuffle(songs)
+
+    songs = remove_duplicated_songs(songs)
+    for song in songs:
+        song.display()
+    print(len(songs))
+
+
+main()
