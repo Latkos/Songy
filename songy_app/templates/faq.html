@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="../../static/wireframe.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+{%load static%}
+<body>
+  <!--container-->
+  <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+    <div class="container"> <a class="navbar-brand" href="#">
+        <i class="fa d-inline fa-lg fa-stop-circle"></i>
+        <b> SONGY</b>
+      </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar16">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar16">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"> <a class="nav-link" href="/songy">HOME</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="/about">ABOUT</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="/faq">FAQ</a> </li>
+        </ul> <a class="btn navbar-btn ml-md-2 btn-light text-dark border-secondary border" href="/contact">CONTACT ME</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container py-3">
+    <div class="row">
+      <div class="col-10 mx-auto">
+        <div class="accordion" id="faqExample">
+          <div class="card">
+            <div class="card-header p-2" id="headingOne">
+              <h5 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> Q: Will there ever be an online play option?</button></h5>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#faqExample">
+              <div class="card-body">
+                <b>Answer:</b> This is by definition a game meant to play locally, with only one device being required. If you want to make it an online game (where everyone can join a session and see the current song and artist), you may do it, but the main project will remain local </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header p-2" id="headingTwo">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"> Q: How to play this game?</button><br></h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#faqExample">
+              <div class="card-body"> <b>Answer:</b> Please refer to the linked video: TODO INPUT LINK </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header p-2" id="headingThree">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"> Q. Will platforms other than Spotify, like YouTube ever be supported?</button></h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#faqExample" style="">
+              <div class="card-body"> <b>Answer:</b> In the future, sure! Currently you can only input Spotify playlists. </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/row-->
+  </div>
+  <pingendo onclick="window.open('https://pingendo.com/', '_blank')" style="cursor:pointer;position: fixed;bottom: 20px;right:20px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:220px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white">Made with Pingendo Free&nbsp;&nbsp;<img src="https://pingendo.com/site-assets/Pingendo_logo_big.png" class="d-block" alt="Pingendo logo" height="16"></pingendo>
+  <div class="py-3">
+    <div class="fixed-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center d-md-flex justify-content-between align-items-center bg-light">
+            <ul class="nav d-flex justify-content-center">
+              <li class="nav-item"> <a class="nav-link active" href="/songy">HOME</a> </li>
+              <li class="nav-item"> <a class="nav-link" href="/about">ABOUT</a> </li>
+              <li class="nav-item"> <a class="nav-link" href="/faq">FAQ</a> </li>
+              <a class="btn navbar-btn ml-md-2 btn-light text-dark border border-secondary" href="/contact">CONTACT ME</a>
+            </ul>
+            <p class="mb-0 py-1">© 2021 Michał Łątkowski</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
