@@ -17,6 +17,7 @@ def songy(request):
 
 
 def faq(request):
+
     return render(request, 'faq.html', {})
 
 
