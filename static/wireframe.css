@@ -7120,6 +7120,6 @@ a.text-dark:hover, a.text-dark:focus {
 .fixed-bottom {
   position: fixed;
   right: 0;
-  bottom: 1%;
+  bottom: 2%;
   left: 0;
   z-index: 1030; }

@@ -8,6 +8,17 @@
   <link rel="stylesheet" href="../../static/wireframe.css">
 </head>
 {%load static%}
+<ul>
+  {% for song in song_list %}
+    <li>{{ song.name }} ***
+      {% for artist in song.artists %}
+          {{ artist }},
+      {%endfor%}
+    </li>
+  {% endfor %}
+</ul>
+
+
 <body>
   <nav class="navbar navbar-expand-md navbar-dark bg-primary">
     <div class="container"> <a class="navbar-brand" href="#">
