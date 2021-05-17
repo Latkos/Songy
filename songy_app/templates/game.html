@@ -8,22 +8,13 @@
   <link rel="stylesheet" href="../../static/wireframe.css">
 </head>
 {%load static%}
-<ul>
-  {% for song in song_list %}
-    <li>{{ song.name }} ***
-      {% for artist in song.artists %}
-          {{ artist }},
-      {%endfor%}
-    </li>
-  {% endfor %}
-</ul>
 
-
-<body>
+<body onload="countdown()">
+  <div id="target-id"></div>
   <nav class="navbar navbar-expand-md navbar-dark bg-primary">
     <div class="container"> <a class="navbar-brand" href="#">
         <i class="fa d-inline fa-lg fa-stop-circle"></i>
-        <b> SONGY</b>
+        <b> SONGY </b>
       </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar16">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -40,13 +31,17 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1 class="text-center display-4" id="variable_song_title">SONG TITLE</h1>
-          <h2 id="variable_artist" class="text-center">ARTIST</h2>
-          <h1 class="display-1 text-primary text-center" id="variable_time" style="">TIME</h1><a class="btn btn-primary btn-lg btn-block text-white" href="#" style=""><b class="">GUESSED THE SONG ALREADY?</b></a>
+          <h1 class="text-center display-4" id="song-artist"></h1>
+          <h2 class="text-center" id="song-title"></h2>
+          <h1 class="display-1 text-primary text-center" id="variable_time" style=""><span id="countdown">10</span></h1>
+          <a class="btn btn-primary btn-lg btn-block text-white" href="#" style=""><b class="">GUESSED THE SONG ALREADY?</b></a>
         </div>
       </div>
     </div>
   </div>
+
+
+
   <div class="py-3">
     <footer class="fixed-bottom">
       <div class="container">
@@ -77,5 +72,49 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
+
+<script>
+
+  var artists={{artists_list | safe}};
+  var titles={{titles_list | safe}};
+  var i=0;
+  function myCallback(){
+     document
+        .getElementById('song-title')
+        .innerHTML = artists[i];
+     document
+        .getElementById('song-artist')
+        .innerHTML = titles[i];
+     i++;
+     if (i==artists.length) alert("NO MORE SONGS TO PLAY!");
+  }
+  var timer=setInterval(myCallback,13000)
+</script>
+
+
+<script>
+var seconds = document.getElementById("countdown").textContent;
+seconds++
+var countdown = setInterval(timer,1000)
+function timer() {
+  seconds--;
+  if (seconds == 0) {
+    setTimeout(resetSeconds,2000)
+  }
+  document.getElementById("countdown").textContent ="PREPARE FOR THE NEXT SONG!";
+  if (seconds>0){
+    document.getElementById("countdown").textContent = seconds;
+  }
+}
+
+function resetSeconds(){
+  seconds=11
+}
+timer();
+myCallback();
+
+</script>
+
+
 
 </html>
