@@ -3,7 +3,6 @@ from django.shortcuts import render
 # Create your views here.
 from .spotify_handler import SongListCreator
 from .spotify_handler import Song
-from .spotify_handler import SongListSerializer
 import json
 
 # def songify(request):
@@ -31,9 +30,10 @@ def contact(request):
 
 def game(request):
     if request.method=='POST':
-        print("HURA\n\n\n")
         print(request.POST)
+        time=request.POST['time']
+        link=request.POST['spotify_link']
         song_list_creator=SongListCreator()
-        song_list=song_list_creator.create_song_list_passable_to_JS(['https://open.spotify.com/playlist/7pTEksbg6GWGm5bTpyo6rB?si=c28c9128c86448c9'])
-        return render(request, 'game.html', {'titles_list':json.dumps(song_list[0]),'artists_list':json.dumps(song_list[1])})
+        song_list=song_list_creator.create_song_list_passable_to_JS([link])
+        return render(request, 'game.html', {'titles_list':json.dumps(song_list[0]),'artists_list':json.dumps(song_list[1]),'time':time,'link':link})
 

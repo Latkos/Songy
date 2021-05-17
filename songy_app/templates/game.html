@@ -33,8 +33,8 @@
         <div class="col-md-12">
           <h1 class="text-center display-4" id="song-artist"></h1>
           <h2 class="text-center" id="song-title"></h2>
-          <h1 class="display-1 text-primary text-center" id="variable_time" style=""><span id="countdown">10</span></h1>
-          <a class="btn btn-primary btn-lg btn-block text-white" href="#" style=""><b class="">GUESSED THE SONG ALREADY?</b></a>
+          <h1 class="display-1 text-primary text-center" id="variable_time" style=""><span id="countdown">{{time}}</span></h1>
+          <button class="btn btn-primary btn-lg btn-block text-white" onclick="resetAll()"><b>GUESSED THE SONG ALREADY?</b></button>
         </div>
       </div>
     </div>
@@ -73,27 +73,26 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 
-<script>
-
-  var artists={{artists_list | safe}};
-  var titles={{titles_list | safe}};
-  var i=0;
-  function myCallback(){
-     document
-        .getElementById('song-title')
-        .innerHTML = artists[i];
-     document
-        .getElementById('song-artist')
-        .innerHTML = titles[i];
-     i++;
-     if (i==artists.length) alert("NO MORE SONGS TO PLAY!");
-  }
-  var timer=setInterval(myCallback,13000)
-</script>
 
 
 <script>
-var seconds = document.getElementById("countdown").textContent;
+    var artists={{artists_list | safe}};
+    var titles={{titles_list | safe}};
+    var i=0;
+    function displaySongs(){
+       document
+          .getElementById('song-title')
+          .innerHTML = artists[i];
+       document
+          .getElementById('song-artist')
+          .innerHTML = titles[i];
+       i++;
+       if (i==artists.length) alert("NO MORE SONGS TO PLAY!");
+    }
+    var songTimer=setInterval(displaySongs,1000*({{time | safe}}+3))
+
+
+var seconds = {{time | safe}}
 seconds++
 var countdown = setInterval(timer,1000)
 function timer() {
@@ -108,10 +107,24 @@ function timer() {
 }
 
 function resetSeconds(){
-  seconds=11
+  seconds= {{time| safe}}
+  seconds++
+  clearInterval(countdown)
+  countdown=setInterval(timer,1000)
+}
+
+function resetAll(){
+  if (seconds<=0){
+    return
+  }
+  resetSeconds()
+  displaySongs()
+  timer()
+  clearInterval(songTimer);
+  songTimer=setInterval(displaySongs,1000*({{time | safe}}+3))
 }
 timer();
-myCallback();
+displaySongs();
 
 </script>
 
