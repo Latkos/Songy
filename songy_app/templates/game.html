@@ -9,7 +9,7 @@
 </head>
 {%load static%}
 
-<body onload="countdown()">
+<body>
   <div id="target-id"></div>
   <nav class="navbar navbar-expand-md navbar-dark bg-primary">
     <div class="container"> <a class="navbar-brand" href="#">
@@ -35,12 +35,14 @@
           <h2 class="text-center" id="song-title"></h2>
           <h1 class="display-1 text-primary text-center" id="variable_time" style=""><span id="countdown">{{time}}</span></h1>
           <button class="btn btn-primary btn-lg btn-block text-white" onclick="resetAll()"><b>GUESSED THE SONG ALREADY?</b></button>
+            <br>
+            <br>
+            <br>
+            <h2 class="text-center">GUESSED SONGS:</h2>
+            <h1 class="text-center display-4" id="guessed_songs_count">0</h1>
         </div>
       </div>
     </div>
-  </div>
-
-
 
   <div class="py-3">
     <footer class="fixed-bottom">
@@ -79,52 +81,65 @@
     var artists={{artists_list | safe}};
     var titles={{titles_list | safe}};
     var i=0;
-    function displaySongs(){
-       document
-          .getElementById('song-title')
-          .innerHTML = artists[i];
-       document
-          .getElementById('song-artist')
-          .innerHTML = titles[i];
-       i++;
-       if (i==artists.length) alert("NO MORE SONGS TO PLAY!");
+    var songsPerRound=5
+    var seconds = 11
+    var waitingForSwap=false
+    var buttonPressed=false
+    var guessedSongs=0
+
+function bigFunction() {
+    document.getElementById("guessed_songs_count").innerHTML = i;
+    seconds--
+    if (buttonPressed == false) {
+        document.getElementById("countdown").textContent = seconds;
+        document.getElementById('song-title').innerHTML = artists[i];
+        document.getElementById('song-artist').innerHTML = titles[i];
+        if (seconds > 0) {
+            setTimeout(bigFunction, 1000)
+        }
+        if (seconds == 0) {
+            document.getElementById("countdown").textContent = "PREPARE FOR THE NEXT SONG!";
+            if ((i + 1) % 3 == 0 && i > 0) {
+                document.getElementById("countdown").textContent = "ZMIANA GRACZA!";
+                setTimeout(() => {
+                    buttonPressed = false
+                    seconds = 11
+                    i++
+                    bigFunction()
+                }, 5000)
+            } else {
+                setTimeout(() => {
+                    buttonPressed = false
+                    seconds = 11
+                    i++
+                    bigFunction()
+                }, 3000);
+            }
+        }
     }
-    var songTimer=setInterval(displaySongs,1000*({{time | safe}}+3))
-
-
-var seconds = {{time | safe}}
-seconds++
-var countdown = setInterval(timer,1000)
-function timer() {
-  seconds--;
-  if (seconds == 0) {
-    setTimeout(resetSeconds,2000)
-  }
-  document.getElementById("countdown").textContent ="PREPARE FOR THE NEXT SONG!";
-  if (seconds>0){
-    document.getElementById("countdown").textContent = seconds;
-  }
 }
 
-function resetSeconds(){
-  seconds= {{time| safe}}
-  seconds++
-  clearInterval(countdown)
-  countdown=setInterval(timer,1000)
+function resetAll() {
+    if (waitingForSwap==false) {
+        if (seconds <= 0) {
+            return;
+        }
+        if (!buttonPressed) {
+            guessedSongs++
+            document.getElementById("guessed_songs_count").innerHTML = guessedSongs;
+            buttonPressed = true
+            document.getElementById("countdown").textContent = "PREPARE FOR THE NEXT SONG!";
+            setTimeout(() => {
+                i++;
+                seconds = 11;
+                buttonPressed = false;
+                bigFunction()
+            }, 3000);
+        }
+    }
 }
 
-function resetAll(){
-  if (seconds<=0){
-    return
-  }
-  resetSeconds()
-  displaySongs()
-  timer()
-  clearInterval(songTimer);
-  songTimer=setInterval(displaySongs,1000*({{time | safe}}+3))
-}
-timer();
-displaySongs();
+bigFunction()
 
 </script>
 
