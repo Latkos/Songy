@@ -19,7 +19,7 @@ from songy_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('songy/', views.songy),
+    path('', views.songy),
     path('about/', views.about),
     path('faq/', views.faq),
     path('contact/', views.contact),

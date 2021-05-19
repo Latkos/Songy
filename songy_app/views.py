@@ -3,6 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from .spotify_handler import SongListCreator
 from .spotify_handler import Song
+from spotipy.exceptions import SpotifyException
 import json
 
 
@@ -29,7 +30,10 @@ def game(request):
         link = request.POST['spotify_link']
         round_length = request.POST['round_length']
         song_list_creator = SongListCreator()
-        song_list = song_list_creator.create_song_list_passable_to_JS([link])
+        try:
+            song_list = song_list_creator.create_song_list_passable_to_JS([link])
+        except SpotifyException:
+            return render(request,'songy.html')
         return render(request, 'game.html',
                       {'titles_list': json.dumps(song_list[0]), 'artists_list': json.dumps(song_list[1]), 'time': time,
                        'link': link, 'round_length': round_length})
