@@ -91,6 +91,12 @@
 function bigFunction() {
     seconds--
     document.getElementById("countdown").textContent = seconds;
+    if (i==artists.length){
+        document.getElementById("countdown").textContent = "The game has ended. Feel free to proceed to home page :)"
+        document.getElementById('song-title').innerHTML ="";
+        document.getElementById('song-artist').innerHTML = "";
+        return
+    }
     document.getElementById('song-title').innerHTML = artists[i];
     document.getElementById('song-artist').innerHTML = titles[i];
     if (seconds > 0) {
