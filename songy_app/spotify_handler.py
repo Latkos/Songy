@@ -3,6 +3,7 @@ import spotipy.oauth2 as oauth2
 import configparser
 import random
 
+
 class SpotifyHandler:
 
     def __init__(self):
@@ -63,7 +64,7 @@ class SongListCreator:
     @staticmethod
     def change_artists_to_string(songs):
         for song in songs:
-            song.artists=', '.join(song.artists)
+            song.artists = ', '.join(song.artists)
 
     def create_song_list(self, link_list):
         # example playlist
@@ -78,12 +79,11 @@ class SongListCreator:
 
         return songs
 
-    def create_song_list_passable_to_JS(self,link_list):
-        songs=self.create_song_list(link_list)
-        names_list=list()
-        artists_list=list()
+    def create_song_list_passable_to_JS(self, link_list):
+        songs = self.create_song_list(link_list)
+        names_list = list()
+        artists_list = list()
         for song in songs:
             names_list.append(song.name)
             artists_list.append(song.artists)
-        return [names_list,artists_list]
-
+        return [names_list, artists_list]
