@@ -25,7 +25,6 @@ def contact(request):
 
 def game(request):
     if request.method == 'POST':
-        print(request.POST)
         time = request.POST['time']
         link = request.POST['spotify_link']
         round_length = request.POST['round_length']
